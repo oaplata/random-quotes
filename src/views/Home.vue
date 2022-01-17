@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Quote
+      v-if="!loading && quote"
+      :text="quote.quoteText"
+      :author="quote.quoteAuthor"
+      :gender="quote.quoteGenre"
+    />
+    <span v-else>Cargando informacion ...</span>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import { mapState } from 'vuex'
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    Quote: () => import('../components/Quote.vue')
+  },
+  computed: {
+    ...mapState(['loading', 'errorMessage', 'quote'])
   }
 }
 </script>
+<style lang="scss">
+.home {
+  align-self: center;
+  text-align: left;
+}
+
+</style>
